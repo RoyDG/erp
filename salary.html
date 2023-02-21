@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Info</title>
+</head>
+
+
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="form-container_large">
+            <h4 class="text-center bg-titel bold pt-2 pb-2"> Select Options </h4>
+            <div class="container-fluid bg-form-titel">
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="container n-form2">
+                            <div class="form-group row m-0 pb-1">
+                                <label
+                                    class="col-sm-4 col-md-4 col-lg-4 col-xl-4 m-0 p-0 d-flex justify-content-end align-items-center pr-1 bg-form-titel-text">Basic</label>
+                                <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 p-0 pr-2 ">
+                                    <input type="number" id="basic-salary" class="console" class="form-control"
+                                        oninput="calculateSalary()" step="0.01" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row m-0 pb-1">
+                                <label
+                                    class="col-sm-4 col-md-4 col-lg-4 col-xl-4 m-0 p-0 d-flex justify-content-end align-items-center pr-1 bg-form-titel-text">House
+                                    Rent </label>
+                                <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 p-0 pr-2 ">
+                                    <input name="house_rent" type="text" id="house-rent" class="console"
+                                        class="form-control" value="" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row m-0 pb-1">
+                                <label
+                                    class="col-sm-4 col-md-4 col-lg-4 col-xl-4 m-0 p-0 d-flex justify-content-end align-items-center pr-1 bg-form-titel-text">Medical
+                                    Allowance </label>
+                                <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 p-0 pr-2 ">
+                                    <input name="medical-allowance" type="text" id="medical-allowance" class="console"
+                                        value="" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row m-0 pb-1">
+                                <label
+                                    class="col-sm-4 col-md-4 col-lg-4 col-xl-4 m-0 p-0 d-flex justify-content-end align-items-center pr-1 bg-form-titel-text">Conveyance
+                                    Allowance</label>
+                                <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 p-0 pr-2 ">
+                                    <input name="ta" type="text" id="convenience" class="console" value=""
+                                        class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="container n-form2">
+                            <div class="form-group row m-0 pb-1">
+                                <label
+                                    class="col-sm-4 col-md-4 col-lg-4 col-xl-4 m-0 p-0 d-flex justify-content-end align-items-center pr-1 bg-form-titel-text">Income
+                                    Tax</label>
+                                <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 p-0 pr-2 ">
+                                    <input id="tax" class="form-control console" /><span id="salary-after-tax"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="container-fluid bg-form-titel">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group row m-0">
+                            <label
+                                class="col-sm-3 col-md-3 col-lg-3 col-xl-3 m-0 p-0 d-flex justify-content-end align-items-center pr-1 bg-form-titel-text">From
+                                Gross Salary</label>
+                            <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 p-0">
+                                <input name="gross_salary" type="text" id="gross-salary" value=""
+                                    class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group row m-0">
+                            <label
+                                class="col-sm-3 col-md-3 col-lg-3 col-xl-3 m-0 p-0 d-flex justify-content-end align-items-center pr-1 bg-form-titel-text">
+                                Total Payable</label>
+                            <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 p-0">
+                                <input name="total_payable" type="text" id="total-payable" value="" readonly=""
+                                    class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <script>
+
+        function calculateSalary() {
+            var basicSalary = parseFloat(document.getElementById("basic-salary").value);
+            var houseRent = basicSalary * 0.5;
+            var medicalAllowance = basicSalary * 0.1;
+            var convenience = basicSalary * 0.15;
+            var grossSalary = basicSalary + houseRent + medicalAllowance + convenience;
+            var tax;
+            if (grossSalary < 80000) {
+                tax = grossSalary * 0.05;
+            } else if (grossSalary < 150000) {
+                tax = grossSalary * 0.075;
+            } else {
+                tax = grossSalary * 0.1;
+            }
+            var totalPayable = grossSalary - tax;
+            document.getElementById("house-rent").value = houseRent.toFixed(2);
+            document.getElementById("medical-allowance").value = medicalAllowance.toFixed(2);
+            document.getElementById("convenience").value = convenience.toFixed(2);
+            document.getElementById("gross-salary").value = grossSalary.toFixed(2);
+            document.getElementById("tax").value = tax.toFixed(2);
+            document.getElementById("total-payable").value = totalPayable.toFixed(2);
+        }
+
+
+    </script>
+
+</body>
+
+</html>
