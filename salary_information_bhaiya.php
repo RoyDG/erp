@@ -196,7 +196,7 @@ if (isset($$unique)) {
                         <div class="form-group row m-0 pb-1">
                             <label class="col-sm-4 col-md-4 col-lg-4 col-xl-4 m-0 p-0 d-flex justify-content-end align-items-center pr-1 bg-form-titel-text">Yearly Income Tax</label>
                             <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 p-0 pr-2 ">
-                                <input name="salary_after_tax" type="text" id="tax" value="<?php echo $salary_after_tax; ?>" class="form-control console" /><span id="salary-after-tax"></span>
+                                <input name="salary_after_tax" type="text" id="tax" min="0" value="<?php echo $salary_after_tax; ?>" class="form-control console" /><span id="salary-after-tax"></span>
 
                             </div>
                         </div>
@@ -283,25 +283,31 @@ if (isset($$unique)) {
         var genders = document.getElementById('gender').value;
 
 
-
         var male_tax_income = (basicSalary * 14) - 300000;
         var female_tax_income = (basicSalary * 14) - 350000;
 
+
         if (genders == 'Male') {
-            if (grossSalary < 80000) {
+
+            if (grossSalary < 80000 && male_tax_income > 0) {
                 tax = male_tax_income * 0.05;
-            } else if (grossSalary < 150000) {
+            } else if (grossSalary < 150000 && male_tax_income > 0) {
                 tax = male_tax_income * 0.075;
-            } else {
+            } else if (grossSalary >= 150000 && male_tax_income > 0) {
                 tax = male_tax_income * 0.1;
+            } else {
+                tax = 0;
             }
         } else if (genders == 'Female') {
-            if (grossSalary < 80000) {
+
+            if (grossSalary < 80000 && female_tax_income > 0) {
                 tax = female_tax_income * 0.05;
-            } else if (grossSalary < 150000) {
+            } else if (grossSalary < 150000 && female_tax_income > 0) {
                 tax = female_tax_income * 0.075;
-            } else {
+            } else if (grossSalary >= 150000 && female_tax_income > 0) {
                 tax = female_tax_income * 0.1;
+            } else {
+                tax = 0;
             }
         } else {
             tax = 0;
