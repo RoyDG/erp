@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Personal Roster Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="datetime-local"],
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            font-size: 16px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Personal Roster Schedule</h1>
+
+
+    <form>
+        <label for="schedule">Schedule:</label>
+        <textarea id="schedule" name="schedule" rows="10" cols="50"></textarea>
+
+        <label for="alarm">Set Alarm:</label>
+        <input type="datetime-local" id="alarm" name="alarm">
+
+        <input type="submit" value="Add">
+    </form>
+
+    <h2>My Roster Schedule</h2>
+    <ul id="roster"></ul>
+
+    <script>
+        // Code to handle form submission
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get the schedule and alarm values from the form
+            var schedule = document.querySelector('#schedule').value;
+            var alarm = document.querySelector('#alarm').value;
+
+            // Save the schedule and alarm to localStorage
+            localStorage.setItem('schedule', schedule);
+            localStorage.setItem('alarm', alarm);
+
+
+            // Schedule the alarm using the Web API
+            var now = new Date();
+            var alarmTime = new Date(alarm);
+            if (alarmTime > now) {
+                var delay = alarmTime - now;
+                setTimeout(function () {
+                    alert('Alarm triggered!');
+                }, delay);
+            } else {
+                alert('Invalid alarm time');
+            }
+
+            // Add the schedule to the list
+            var rosterList = document.querySelector('#roster');
+            var listItem = document.createElement('li');
+            listItem.innerText = schedule;
+            rosterList.appendChild(listItem);
+
+            // Clear the form inputs
+            document.querySelector('#schedule').value = '';
+            document.querySelector('#alarm').value = '';
+
+            // Prompt the user to add another schedule
+            if (confirm('Schedule added successfully! Add another one?')) {
+                document.querySelector('#schedule').focus();
+            }
+        });
+
+        // Code to populate form with saved data
+        var savedSchedule = localStorage.getItem('schedule');
+        var savedAlarm = localStorage.getItem('alarm');
+        if (savedSchedule) {
+            document.querySelector('#schedule').value = savedSchedule;
+        }
+        if (savedAlarm) {
+            document.querySelector('#alarm').value = savedAlarm;
+        }
+    </script>
+</body>
+
+</html>
