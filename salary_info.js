@@ -37,16 +37,24 @@
 			else{
 				tax = 0;
 			}
+
+			var totalPayable = grossSalary - (tax / 12);
+			document.getElementById("house-rent").value = Math.round(houseRent);
+			document.getElementById("medical-allowance").value = Math.round(medicalAllowance);
+			document.getElementById("convenience").value = Math.round(convenience);
+			document.getElementById("gross-salary").value = Math.round(grossSalary);
+			document.getElementById("tax").value = Math.round(tax);
+			document.getElementById("total-payable").value = Math.round(totalPayable);
             
-            var totalPayable = grossSalary - tax;
+            /*
             document.getElementById("house-rent").value = houseRent.toFixed(2);
             document.getElementById("medical-allowance").value = medicalAllowance.toFixed(2);
             document.getElementById("convenience").value = convenience.toFixed(2);
             document.getElementById("gross-salary").value = grossSalary.toFixed(2);
             document.getElementById("tax").value = tax.toFixed(2);
-            document.getElementById("total-payable").value = totalPayable.toFixed(2);
-        }
+            document.getElementById("total-payable").value = totalPayable.toFixed(2);*/        
+			}
 
 </script>
 
-<? require_once "../../../assets/template/layout.bottom.php"; ?>
+
